@@ -52,6 +52,17 @@ public class DayHistoryTest {
                     result.getCarbohydratesPer100Gram(), 
                     allowedFloatDifference);
     }
+    
+    @Test
+    public void testAddAndGetAllEatenFood() {
+        dayHistoryToTest.addEatenFood(testFoods[0]);
+        dayHistoryToTest.addEatenFood(testFoods[1]);
+        
+        Food[] result = dayHistoryToTest.getAllEatenFood();
+        
+        assertEquals(testFoods[0].getName(), result[0].getName());
+        assertEquals(testFoods[1].getName(), result[1].getName());
+    }
 
     @Test
     public void testClearAll() {

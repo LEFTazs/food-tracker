@@ -26,6 +26,11 @@ public class DayHistory {
                 .get();
     }
     
+    public Food[] getAllEatenFood() {
+        Food[] newArray = new Food[trackedFood.size()];
+        return trackedFood.toArray(newArray);
+    }
+    
     public void clearAll() {
         this.trackedFood.clear();
     }

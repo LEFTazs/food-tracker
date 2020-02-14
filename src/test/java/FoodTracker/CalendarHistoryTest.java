@@ -31,6 +31,17 @@ public class CalendarHistoryTest {
         assertEquals(dayHistory[1].getDate(), result.getDate());
     }
     
+    @Test
+    public void testAddAndGetAllDays() {
+        calendarHistoryToTest.addDayHistory(dayHistory[0]);
+        calendarHistoryToTest.addDayHistory(dayHistory[1]);
+        
+        DayHistory[] result = calendarHistoryToTest.getAllDays();
+        
+        assertEquals(dayHistory[0].getDate(), result[0].getDate());
+        assertEquals(dayHistory[1].getDate(), result[1].getDate());
+    }
+    
     @Test(expected = SameDateException.class)
     public void testAddDayHistoryException() {
         calendarHistoryToTest.addDayHistory(dayHistory[0]);

@@ -24,6 +24,11 @@ public class CalendarHistory {
     public DayHistory getDayHistory(int id) {
         return trackedDays.get(id);
     }
+
+    public DayHistory[] getAllDays() {
+        DayHistory[] newArray = new DayHistory[trackedDays.size()];
+        return trackedDays.toArray(newArray);
+    }
     
     public void clearAll() {
         trackedDays.clear();
