@@ -1,0 +1,14 @@
+version: '3.7'
+services:
+  mysql:
+    image: mysql
+    container_name: mysql
+    volumes:
+    - "./database:/var/lib/mysql"
+    ports:
+    - "9001:3306"
+    environment:
+    - MYSQL_DATABASE=foodtracker
+    - MYSQL_USER=foodtracker
+    - MYSQL_PASSWORD=84VgKg472f2gH47Hdvn3hZ3
+    - MYSQL_ROOT_PASSWORD=84VgKg472f2gH47Hdvn3hZ3

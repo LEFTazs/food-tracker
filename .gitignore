@@ -15,3 +15,6 @@ gradle-app.setting
 
 # Netbeans
 nbproject/
+
+# Database
+database/
