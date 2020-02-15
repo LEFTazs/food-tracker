@@ -10,7 +10,7 @@ public class SimpleDate {
     private int month;
     private int day;
     
-    SimpleDate(int year, int month, int day) {
+    public SimpleDate(int year, int month, int day) {
         if (!(isYearValid(year) && isMonthValid(month) && isDayValid(day)))
             throw new InvalidDateException();
         

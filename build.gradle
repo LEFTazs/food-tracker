@@ -8,7 +8,7 @@ apply plugin: 'jacoco'
 apply plugin: 'application'
 
 
-mainClassName = 'FoodTracker.FoodTrackerApplication'
+mainClassName = 'SpringInterface.FoodTrackerApplication'
 
 repositories {
     jcenter()
