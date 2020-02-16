@@ -32,6 +32,17 @@ public class CalendarHistoryTest {
     }
     
     @Test
+    public void testAddAndGetDayHistoryByDate() {
+        calendarHistoryToTest.addDayHistory(dayHistory[0]);
+        calendarHistoryToTest.addDayHistory(dayHistory[1]);
+        
+        SimpleDate searchDate = dayHistory[1].getDate();
+        DayHistory result = calendarHistoryToTest.getDayHistory(searchDate);
+        
+        assertEquals(dayHistory[1].getDate(), result.getDate());
+    }
+    
+    @Test
     public void testAddAndGetAllDays() {
         calendarHistoryToTest.addDayHistory(dayHistory[0]);
         calendarHistoryToTest.addDayHistory(dayHistory[1]);
@@ -47,7 +58,7 @@ public class CalendarHistoryTest {
         calendarHistoryToTest.addDayHistory(dayHistory[0]);
         calendarHistoryToTest.addDayHistory(dayHistory[0]);
     }
-    
+        
     @Test
     public void testGetNumberOfDayHistories() {
         calendarHistoryToTest.addDayHistory(dayHistory[0]);
@@ -57,7 +68,7 @@ public class CalendarHistoryTest {
         
         assertEquals(size, 2);
     }
-    
+        
     @Test
     public void testClearAll() {
         calendarHistoryToTest.addDayHistory(dayHistory[0]);

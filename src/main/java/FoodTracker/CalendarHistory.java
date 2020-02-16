@@ -39,6 +39,13 @@ public class CalendarHistory {
     public DayHistory getDayHistory(int id) {
         return trackedDays.get(id);
     }
+    
+    public DayHistory getDayHistory(SimpleDate date) {
+        return trackedDays.stream()
+                .filter(day -> day.getDate().equals(date))
+                .findFirst()
+                .get();
+    }
 
     public DayHistory[] getAllDays() {
         DayHistory[] newArray = new DayHistory[trackedDays.size()];

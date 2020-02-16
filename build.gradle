@@ -1,5 +1,8 @@
 plugins {
     id('io.ebean') version '12.1.10'
+    
+    id 'org.springframework.boot' version '2.0.5.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.7.RELEASE'
 }
 
 apply plugin: 'java'
@@ -7,7 +10,7 @@ apply plugin: 'jacoco'
 apply plugin: 'application'
 
 
-mainClassName = 'FoodTracker.Main'
+mainClassName = 'SpringInterface.FoodTrackerApplication'
 
 repositories {
     jcenter()
@@ -39,6 +42,10 @@ dependencies {
     compile('javax.xml.bind:jaxb-api:2.3.0')
     compile('javax.activation:activation:1.1')
     compile('org.glassfish.jaxb:jaxb-runtime:2.3.0')
+    
+    //Springboot
+    implementation 'org.springframework.boot:spring-boot-dependencies:2.0.5.RELEASE'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
 }
 
 ebean {
