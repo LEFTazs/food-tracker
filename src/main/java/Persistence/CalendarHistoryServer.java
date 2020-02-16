@@ -4,6 +4,10 @@ import FoodTracker.CalendarHistory;
 
 public class CalendarHistoryServer extends ObjectServer<CalendarHistory> {
 
+    public CalendarHistoryServer(String driver, String url, String username, String password, String migrationFile) {
+        super(driver, url, username, password, migrationFile);
+    }
+
     @Override
     public void save(CalendarHistory bean) {
         ebeanServer.save(bean);

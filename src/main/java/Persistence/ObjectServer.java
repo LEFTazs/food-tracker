@@ -4,21 +4,62 @@ import io.ebean.EbeanServer;
 import io.ebean.EbeanServerFactory;
 import io.ebean.config.ServerConfig;
 import io.ebean.datasource.DataSourceConfig;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import liquibase.Contexts;
+import liquibase.LabelExpression;
+import liquibase.Liquibase;
+import liquibase.database.Database;
+import liquibase.database.DatabaseFactory;
+import liquibase.database.jvm.JdbcConnection;
+import liquibase.exception.LiquibaseException;
+import liquibase.resource.FileSystemResourceAccessor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public abstract class ObjectServer<T> {
     
     protected EbeanServer ebeanServer;
+    
+    private final String driver, url, username, password, migrationFile;
+    
+    public ObjectServer(String driver, String url, 
+            String username, String password, String migrationFile) {
+        this.driver = driver;
+        this.url = url;
+        this.username = username;
+        this.password = password;
+        this.migrationFile = migrationFile;
+    }
 
+    public void updateSchema() {
+        try (Connection connection = DriverManager.getConnection(
+                url,
+                username,
+                password)) {
+            Database database = DatabaseFactory.getInstance()
+                    .findCorrectDatabaseImplementation(
+                            new JdbcConnection(connection));
+            Liquibase liquibase = new Liquibase(migrationFile, 
+                    new FileSystemResourceAccessor(), 
+                    database);
+            liquibase.update(new Contexts(), new LabelExpression());
+        } catch (LiquibaseException | SQLException e) {
+            log.error(e.getLocalizedMessage());
+        }
+    }
+    
     public void initialize() {
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setDriver("com.mysql.cj.jdbc.Driver");
-        dsc.setUrl("jdbc:mysql://localhost:9001/foodtracker");
-        dsc.setUsername("foodtracker");
-        dsc.setPassword("84VgKg472f2gH47Hdvn3hZ3");
+        dsc.setDriver(driver);
+        dsc.setUrl(url);
+        dsc.setUsername(username);
+        dsc.setPassword(password);
         ServerConfig cfg = new ServerConfig();
         cfg.setName("foodtracker");
-        cfg.setDdlGenerate(true);
-        cfg.setDdlRun(true);
+        cfg.setDdlGenerate(false);
+        cfg.setDdlRun(false);
         cfg.setRegister(true);
         cfg.setDataSourceConfig(dsc);
         cfg.setDefaultServer(true);
