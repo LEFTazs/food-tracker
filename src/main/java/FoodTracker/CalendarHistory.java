@@ -3,8 +3,23 @@ package FoodTracker;
 import exceptions.SameDateException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import lombok.Getter;
+import lombok.Setter;
 
+@Entity
 public class CalendarHistory {
+    @Id @Getter @Setter
+    private int id;
+    
+    @Getter @Setter
+    private String owner;
+    
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<DayHistory> trackedDays = new ArrayList<>();
     
     public void addDayHistory(DayHistory dayHistoryToAdd) {

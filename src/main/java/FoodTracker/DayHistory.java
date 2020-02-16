@@ -2,14 +2,29 @@ package FoodTracker;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import lombok.Getter;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
-@RequiredArgsConstructor
+@Entity
 public class DayHistory {
-    @Getter @NonNull private SimpleDate date;
+    @Id @Getter @Setter
+    private int id;
+
+    @Getter @NonNull @Embedded
+    private SimpleDate date;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Food> trackedFood = new ArrayList<>();
+    
+    public DayHistory(SimpleDate date) {
+        this.date = date;
+    }
     
     public void addEatenFood(Food eatenFood) {
         this.trackedFood.add(eatenFood);

@@ -1,16 +1,17 @@
 package FoodTracker;
 
 import exceptions.InvalidDateException;
-import lombok.AllArgsConstructor;
+import javax.persistence.Embeddable;
 import lombok.Getter;
 
 @Getter
+@Embeddable
 public class SimpleDate {
     private int year;
     private int month;
     private int day;
     
-    SimpleDate(int year, int month, int day) {
+    public SimpleDate(int year, int month, int day) {
         if (!(isYearValid(year) && isMonthValid(month) && isDayValid(day)))
             throw new InvalidDateException();
         
