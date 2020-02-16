@@ -2,6 +2,7 @@ package Persistence;
 
 import FoodTracker.CalendarHistory;
 import SpringInterface.ConfigProperties;
+import java.util.List;
 
 public class CalendarHistoryServer extends ObjectServer<CalendarHistory> {
 
@@ -17,6 +18,13 @@ public class CalendarHistoryServer extends ObjectServer<CalendarHistory> {
     @Override
     public CalendarHistory get(int id) {
         return ebeanServer.find(CalendarHistory.class, id);
+    }
+    
+    @Override
+    public boolean isEmpty() {
+        List<CalendarHistory> found = 
+                ebeanServer.find(CalendarHistory.class).findList();
+        return found.isEmpty();
     }
 
     @Override

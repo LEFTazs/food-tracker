@@ -66,6 +66,8 @@ public abstract class ObjectServer<T> {
     
     abstract public T get(int id);
     
+    abstract public boolean isEmpty();
+    
     abstract public void delete(T bean);
     
 }
