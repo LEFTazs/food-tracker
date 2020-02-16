@@ -4,6 +4,7 @@ import FoodTracker.CalendarHistory;
 import FoodTracker.DayHistory;
 import FoodTracker.Food;
 import FoodTracker.SimpleDate;
+import org.springframework.http.ResponseEntity;
 
 public class Service {
     private CalendarHistory calendarHistory;
@@ -12,37 +13,80 @@ public class Service {
         calendarHistory = new CalendarHistory();
     }
     
-    public DayHistory[] getCalendarDays() {
-        return calendarHistory.getAllDays();
+    public ResponseEntity<Object> getCalendarDays() {
+        try {
+            DayHistory[] days = calendarHistory.getAllDays();
+            return ResponseCreator.createOkResponse(days);
+        } catch (Exception e) {
+            return ResponseCreator.createExceptionResponse(e);
+        }
     }
     
-    public DayHistory getCalendarDay(int year, int month, int day) {
-        SimpleDate date = new SimpleDate(year, month, day);
-        return calendarHistory.getDayHistory(date);
+    public ResponseEntity<Object> getCalendarDay(int year, int month, int day) {
+        try {
+            SimpleDate date = new SimpleDate(year, month, day);
+            DayHistory result = calendarHistory.getDayHistory(date);
+            return ResponseCreator.createOkResponse(result);
+        } catch (Exception e) {
+            return ResponseCreator.createExceptionResponse(e);
+        }
     }
     
-    public Food[] getAllFoodFromDay(int year, int month, int day) {
-        DayHistory dayHistory = getCalendarDay(year, month, day);
-        return dayHistory.getAllEatenFood();
+    public ResponseEntity<Object> getAllFoodFromDay(int year, int month, int day) {
+        try {
+            SimpleDate date = new SimpleDate(year, month, day);
+            DayHistory dayHistory = calendarHistory.getDayHistory(date);
+            Food[] result = dayHistory.getAllEatenFood();
+            return ResponseCreator.createOkResponse(result);
+        } catch (Exception e) {
+            return ResponseCreator.createExceptionResponse(e);
+        }
+
     }
     
-    public void addDayToCalendar(SimpleDate newDayDate) {
-        DayHistory dayHistoryToAdd = new DayHistory(newDayDate);
-        calendarHistory.addDayHistory(dayHistoryToAdd);
+    public ResponseEntity<Object> addDayToCalendar(SimpleDate newDayDate) {
+        try {
+            DayHistory dayHistoryToAdd = new DayHistory(newDayDate);
+            calendarHistory.addDayHistory(dayHistoryToAdd);
+            return ResponseCreator.createOkResponse();
+        } catch (Exception e) {
+            return ResponseCreator.createExceptionResponse(e);
+        }
+
     }
     
-    public void addFoodToDay(int year, int month, int day, Food foodToAdd) {
-        DayHistory dayHistory = getCalendarDay(year, month, day);
-        dayHistory.addEatenFood(foodToAdd);
+    public ResponseEntity<Object> addFoodToDay(int year, int month, int day, Food foodToAdd) {
+        try {
+            SimpleDate date = new SimpleDate(year, month, day);
+            DayHistory dayHistory = calendarHistory.getDayHistory(date);
+            dayHistory.addEatenFood(foodToAdd);
+            return ResponseCreator.createOkResponse();
+        } catch (Exception e) {
+            return ResponseCreator.createExceptionResponse(e);
+        }
+
     }
     
-    public void clearAllFromDay(int year, int month, int day) {
-        DayHistory dayHistory = getCalendarDay(year, month, day);
-        dayHistory.clearAll();
+    public ResponseEntity<Object> clearAllFromDay(int year, int month, int day) {
+        try {
+            SimpleDate date = new SimpleDate(year, month, day);
+            DayHistory dayHistory = calendarHistory.getDayHistory(date);
+            dayHistory.clearAll();
+            return ResponseCreator.createOkResponse();
+        } catch (Exception e) {
+            return ResponseCreator.createExceptionResponse(e);
+        }
+
     }
     
-    public void clearAll() {
-        calendarHistory.clearAll();
+    public ResponseEntity<Object> clearAll() {
+        try {
+            calendarHistory.clearAll();
+            return ResponseCreator.createOkResponse();
+        } catch (Exception e) {
+            return ResponseCreator.createExceptionResponse(e);
+        }
+
     }
     
 }
