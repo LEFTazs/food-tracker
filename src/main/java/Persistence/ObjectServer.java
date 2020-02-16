@@ -1,5 +1,6 @@
 package Persistence;
 
+import SpringInterface.ConfigProperties;
 import io.ebean.EbeanServer;
 import io.ebean.EbeanServerFactory;
 import io.ebean.config.ServerConfig;
@@ -22,26 +23,21 @@ public abstract class ObjectServer<T> {
     
     protected EbeanServer ebeanServer;
     
-    private final String driver, url, username, password, migrationFile;
+    private final ConfigProperties configProperties;
     
-    public ObjectServer(String driver, String url, 
-            String username, String password, String migrationFile) {
-        this.driver = driver;
-        this.url = url;
-        this.username = username;
-        this.password = password;
-        this.migrationFile = migrationFile;
+    public ObjectServer(ConfigProperties configProperties) {
+        this.configProperties = configProperties;
     }
 
     public void updateSchema() {
         try (Connection connection = DriverManager.getConnection(
-                url,
-                username,
-                password)) {
+                configProperties.getUrl(),
+                configProperties.getUsername(),
+                configProperties.getPassword())) {
             Database database = DatabaseFactory.getInstance()
                     .findCorrectDatabaseImplementation(
                             new JdbcConnection(connection));
-            Liquibase liquibase = new Liquibase(migrationFile, 
+            Liquibase liquibase = new Liquibase(configProperties.getMigrationFile(), 
                     new FileSystemResourceAccessor(), 
                     database);
             liquibase.update(new Contexts(), new LabelExpression());
@@ -52,10 +48,10 @@ public abstract class ObjectServer<T> {
     
     public void initialize() {
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setDriver(driver);
-        dsc.setUrl(url);
-        dsc.setUsername(username);
-        dsc.setPassword(password);
+        dsc.setDriver(configProperties.getDriver());
+        dsc.setUrl(configProperties.getUrl());
+        dsc.setUsername(configProperties.getUsername());
+        dsc.setPassword(configProperties.getPassword());
         ServerConfig cfg = new ServerConfig();
         cfg.setName("foodtracker");
         cfg.setDdlGenerate(false);

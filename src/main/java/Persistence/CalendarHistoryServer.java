@@ -1,11 +1,12 @@
 package Persistence;
 
 import FoodTracker.CalendarHistory;
+import SpringInterface.ConfigProperties;
 
 public class CalendarHistoryServer extends ObjectServer<CalendarHistory> {
 
-    public CalendarHistoryServer(String driver, String url, String username, String password, String migrationFile) {
-        super(driver, url, username, password, migrationFile);
+    public CalendarHistoryServer(ConfigProperties configProperties) {
+        super(configProperties);
     }
 
     @Override

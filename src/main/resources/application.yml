@@ -1,0 +1,5 @@
+driver: "com.mysql.cj.jdbc.Driver"
+url: "jdbc:mysql://localhost:9001/foodtracker"
+username: "foodtracker"
+password: "84VgKg472f2gH47Hdvn3hZ3"
+migrationFile: "./src/main/resources/migrations.xml"
