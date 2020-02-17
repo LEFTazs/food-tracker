@@ -12,3 +12,9 @@ services:
     - MYSQL_USER=foodtracker
     - MYSQL_PASSWORD=84VgKg472f2gH47Hdvn3hZ3
     - MYSQL_ROOT_PASSWORD=84VgKg472f2gH47Hdvn3hZ3
+  sonarqube:
+    image: sonarqube
+    container_name: sonarqube
+    ports:
+    - "9000:9000"
+    - "9092:9092"
