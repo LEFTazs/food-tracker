@@ -1,7 +1,9 @@
-package SpringInterface;
+package spring_interface;
 
-import FoodTracker.Food;
-import FoodTracker.SimpleDate;
+import data_transfer_objects.Converter;
+import data_transfer_objects.FoodDTO;
+import foodtracker.Food;
+import foodtracker.SimpleDate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,8 +50,9 @@ public class FoodTrackerController {
     public ResponseEntity<Object> addFoodToDay(@PathVariable int year, 
                              @PathVariable int month, 
                              @PathVariable int day,
-                             @RequestBody Food newFood) {
-        return service.addFoodToDay(year, month, day, newFood);
+                             @RequestBody FoodDTO newFood) {
+        Food food = Converter.foodFromDTO(newFood);
+        return service.addFoodToDay(year, month, day, food);
     }
     
     @DeleteMapping("/calendar")

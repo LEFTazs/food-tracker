@@ -1,4 +1,4 @@
-package FoodTracker;
+package foodtracker;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

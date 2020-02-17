@@ -1,5 +1,8 @@
-package FoodTracker;
+package foodtracker;
 
+import foodtracker.DayHistory;
+import foodtracker.CalendarHistory;
+import foodtracker.SimpleDate;
 import exceptions.SameDateException;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -66,7 +69,7 @@ public class CalendarHistoryTest {
         
         int size = calendarHistoryToTest.getNumberOfDayHistories();
         
-        assertEquals(size, 2);
+        assertEquals(2, size);
     }
         
     @Test
@@ -77,6 +80,6 @@ public class CalendarHistoryTest {
         calendarHistoryToTest.clearAll();
         
         int size = calendarHistoryToTest.getNumberOfDayHistories();
-        assertEquals(size, 0);
+        assertEquals(0, size);
     }
 }

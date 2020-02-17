@@ -1,4 +1,4 @@
-package SpringInterface;
+package spring_interface;
 
 import lombok.Getter;
 import lombok.Setter;

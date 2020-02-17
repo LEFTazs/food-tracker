@@ -1,17 +1,13 @@
-package FoodTracker;
+package foodtracker;
 
+import foodtracker.SimpleDate;
 import exceptions.InvalidDateException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 
 public class SimpleDateTest {
-    
-    @Test
-    public void testConstructorWithValidDate() {
-        SimpleDate simpleDate = new SimpleDate(2019, 3, 6);
-    }
-    
+        
     @Test(expected = InvalidDateException.class)
     public void testConstructorWithInvalidYear() {
         SimpleDate simpleDate = new SimpleDate(-5, 3, 6);
@@ -49,10 +45,11 @@ public class SimpleDateTest {
     }
     
     @Test
-    public void testEquals() {
+    public void testEqualsAndHash() {
         SimpleDate simpleDate1 = new SimpleDate(2019, 3, 6);
         SimpleDate simpleDate2 = new SimpleDate(2019, 3, 6);
         assertEquals(simpleDate1, simpleDate2);
+        assertEquals(simpleDate1.hashCode(), simpleDate2.hashCode());
     }
     
     @Test

@@ -1,6 +1,6 @@
-package Persistence;
+package persistence;
 
-import SpringInterface.ConfigProperties;
+import spring_interface.ConfigProperties;
 import io.ebean.EbeanServer;
 import io.ebean.EbeanServerFactory;
 import io.ebean.config.ServerConfig;
@@ -62,12 +62,12 @@ public abstract class ObjectServer<T> {
         ebeanServer = EbeanServerFactory.create(cfg);
     }
     
-    abstract public void save(T bean);
+    public abstract void save(T bean);
     
-    abstract public T get(int id);
+    public abstract T get(int id);
     
-    abstract public boolean isEmpty();
+    public abstract boolean isEmpty();
     
-    abstract public void delete(T bean);
+    public abstract void delete(T bean);
     
 }

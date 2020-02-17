@@ -1,4 +1,4 @@
-package FoodTracker;
+package foodtracker;
 
 import exceptions.InvalidDateException;
 import javax.persistence.Embeddable;
@@ -43,5 +43,14 @@ public class SimpleDate {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 53 * hash + this.year;
+        hash = 13 * hash + this.month;
+        hash = 33 * hash + this.day;
+        return hash;
     }
 }

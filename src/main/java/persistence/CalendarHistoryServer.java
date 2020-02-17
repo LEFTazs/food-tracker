@@ -1,7 +1,7 @@
-package Persistence;
+package persistence;
 
-import FoodTracker.CalendarHistory;
-import SpringInterface.ConfigProperties;
+import foodtracker.CalendarHistory;
+import spring_interface.ConfigProperties;
 import java.util.List;
 
 public class CalendarHistoryServer extends ObjectServer<CalendarHistory> {

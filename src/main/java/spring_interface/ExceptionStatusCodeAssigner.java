@@ -1,11 +1,10 @@
-package SpringInterface;
+package spring_interface;
 
 import org.springframework.http.HttpStatus;
 
 public class ExceptionStatusCodeAssigner {
     
-    public ExceptionStatusCodeAssigner() {
-        throw new RuntimeException("Can't construct ExceptionStatusCodeAssigner class!");
+    private ExceptionStatusCodeAssigner() {
     }
     
     public static HttpStatus choose(Exception e) {

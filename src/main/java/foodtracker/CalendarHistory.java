@@ -1,4 +1,4 @@
-package FoodTracker;
+package foodtracker;
 
 import exceptions.SameDateException;
 import java.util.ArrayList;
@@ -44,7 +44,7 @@ public class CalendarHistory {
         return trackedDays.stream()
                 .filter(day -> day.getDate().equals(date))
                 .findFirst()
-                .get();
+                .orElseThrow();
     }
 
     public DayHistory[] getAllDays() {

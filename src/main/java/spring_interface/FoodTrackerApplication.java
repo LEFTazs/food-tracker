@@ -1,6 +1,6 @@
-package SpringInterface;
+package spring_interface;
 
-import Persistence.CalendarHistoryServer;
+import persistence.CalendarHistoryServer;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;

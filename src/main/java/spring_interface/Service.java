@@ -1,9 +1,9 @@
-package SpringInterface;
+package spring_interface;
 
-import FoodTracker.CalendarHistory;
-import FoodTracker.DayHistory;
-import FoodTracker.Food;
-import FoodTracker.SimpleDate;
+import foodtracker.CalendarHistory;
+import foodtracker.DayHistory;
+import foodtracker.Food;
+import foodtracker.SimpleDate;
 import org.springframework.http.ResponseEntity;
 
 public class Service {

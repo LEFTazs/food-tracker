@@ -1,5 +1,8 @@
-package FoodTracker;
+package foodtracker;
 
+import foodtracker.Food;
+import foodtracker.DayHistory;
+import foodtracker.SimpleDate;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

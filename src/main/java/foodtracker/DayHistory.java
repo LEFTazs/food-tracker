@@ -1,4 +1,4 @@
-package FoodTracker;
+package foodtracker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +38,7 @@ public class DayHistory {
         return this.trackedFood.stream()
                 .filter(food -> food.getName().equals(name))
                 .findFirst()
-                .get();
+                .orElseThrow();
     }
     
     public Food[] getAllEatenFood() {

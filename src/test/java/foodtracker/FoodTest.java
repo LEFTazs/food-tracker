@@ -1,5 +1,6 @@
-package FoodTracker;
+package foodtracker;
 
+import foodtracker.Food;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

@@ -1,9 +1,12 @@
-package SpringInterface;
+package spring_interface;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 public class ResponseCreator {
+    
+    private ResponseCreator() {
+    }
     
     public static ResponseEntity<Object> createOkResponse() {
         return new ResponseEntity<>(HttpStatus.OK);

@@ -1,11 +1,10 @@
-package SpringInterface;
+package spring_interface;
 
 import exceptions.*;
 
 public class ExceptionIdAssigner {
     
-    public ExceptionIdAssigner() {
-        throw new RuntimeException("Can't construct ExceptionIdAssigner class!");
+    private ExceptionIdAssigner() {
     }
     
     public static int choose(Exception e) {
