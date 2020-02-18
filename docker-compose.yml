@@ -1,5 +1,14 @@
 version: '3.7'
 services:
+  foodtracker-backend:
+    image: polc/foodtracker
+    container_name: foodtracker
+    ports:
+    - "9080:8080"
+    environment:
+    - DB_USER=foodtracker
+    - DB_PASS=84VgKg472f2gH47Hdvn3hZ3
+    - DB_URL=jdbc:mysql://mysql:3306/foodtracker
   mysql:
     image: mysql
     container_name: mysql

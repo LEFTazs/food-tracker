@@ -1,3 +1,6 @@
+import com.bmuschko.gradle.docker.tasks.image.*
+import com.bmuschko.gradle.docker.tasks.container.*
+
 plugins {
     id('io.ebean') version '12.1.10'
     
@@ -5,14 +8,17 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.7.RELEASE'
     
     id "org.sonarqube" version "2.7"
+    
+    id 'com.bmuschko.docker-java-application' version '6.1.1'
 }
 
 apply plugin: 'java'
 apply plugin: 'jacoco'
 apply plugin: 'application'
+apply plugin: 'com.bmuschko.docker-remote-api'
 
 
-mainClassName = 'SpringInterface.FoodTrackerApplication'
+mainClassName = 'spring_interface.FoodTrackerApplication'
 
 repositories {
     jcenter()
@@ -52,4 +58,45 @@ dependencies {
 
 ebean {
   debugLevel = 1
+}
+
+
+bootJar {
+    enabled = false
+}
+jar {
+    enabled = true
+}
+
+docker {
+    url = "unix:///var/run/docker.sock";
+}
+
+task createDockerfile(type: Dockerfile) {    
+    dependsOn = [':distTar']
+    destFile = project.file('build/Dockerfile')
+    from "openjdk:15-jdk-alpine"
+    label(['maintainer': 'Szolar Balazs "leftazshun@gmail.com"'])
+
+    def appFolder = "/${rootProject.name}/"
+
+    runCommand "apk --update add curl tar bash wget openssl"
+    runCommand "wget --no-check-certificate https://github.com/jwilder/dockerize/releases/download/v0.6.1/dockerize-linux-amd64-v0.6.1.tar.gz"
+    runCommand "tar -C /usr/local/bin -xzvf dockerize-linux-amd64-v0.6.1.tar.gz"
+
+    addFile "distributions/${project.distTar.archiveName}", "/tmp"
+    runCommand "mv /tmp/${project.applicationName} /${project.applicationName}"
+    workingDir  "${appFolder}"
+    
+    addFile "resources/main/application.yml.template", "/${rootProject.name}"
+    addFile "resources/main/migrations.xml", "${appFolder}/src/main/resources/migrations.xml"
+
+    defaultCommand  'bash', '-c', 'dockerize -wait ${DB_URL/jdbc:mysql/tcp} -timeout 20s' + " -template /${rootProject.name}/application.yml.template:/${rootProject.name}/application.yml /${project.applicationName}/bin/${project.applicationName}  server ${project.applicationName}/application.yml"
+
+}
+
+dockerBuildImage {
+    dependsOn createDockerfile
+    inputDir = file('build')
+    images.add("polc/${project.name.toLowerCase()}")
 }
