@@ -18,6 +18,7 @@ public class FoodTrackerApplication {
     
     @PostConstruct
     public void initalizeServer() {
+        //TODO: pass this to Controller
         CalendarHistoryServer server = new CalendarHistoryServer(config);
     }
     
