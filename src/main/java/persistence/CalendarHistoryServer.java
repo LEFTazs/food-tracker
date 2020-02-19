@@ -21,6 +21,13 @@ public class CalendarHistoryServer extends ObjectServer<CalendarHistory> {
     }
     
     @Override
+    public CalendarHistory getLast() {
+        List<CalendarHistory> found = 
+                ebeanServer.find(CalendarHistory.class).findList();
+        return found.get(found.size() - 1);
+    }
+    
+    @Override
     public boolean isEmpty() {
         List<CalendarHistory> found = 
                 ebeanServer.find(CalendarHistory.class).findList();

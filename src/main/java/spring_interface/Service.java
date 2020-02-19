@@ -7,18 +7,21 @@ import foodtracker.SimpleDate;
 import io.ebean.Ebean;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
+import persistence.CalendarHistoryServer;
 
 public class Service {
     private CalendarHistory calendarHistory;
-    
-    public Service() {
+    private CalendarHistoryServer server;
+        
+    public Service(CalendarHistoryServer server) {
+        this.server = server;
         loadOrCreateCalendarHistory();
     }
     
     public ResponseEntity<Object> getCalendarDays() {
         try {
             DayHistory[] days = calendarHistory.getAllDays();
-            updateCalendarHistoryInDatabase();
+            server.save(calendarHistory);
             return ResponseCreator.createOkResponse(days);
         } catch (Exception e) {
             return ResponseCreator.createExceptionResponse(e);
@@ -29,7 +32,7 @@ public class Service {
         try {
             SimpleDate date = new SimpleDate(year, month, day);
             DayHistory result = calendarHistory.getDayHistory(date);
-            updateCalendarHistoryInDatabase();
+            server.save(calendarHistory);
             return ResponseCreator.createOkResponse(result);
         } catch (Exception e) {
             return ResponseCreator.createExceptionResponse(e);
@@ -41,7 +44,7 @@ public class Service {
             SimpleDate date = new SimpleDate(year, month, day);
             DayHistory dayHistory = calendarHistory.getDayHistory(date);
             Food[] result = dayHistory.getAllEatenFood();
-            updateCalendarHistoryInDatabase();
+            server.save(calendarHistory);
             return ResponseCreator.createOkResponse(result);
         } catch (Exception e) {
             return ResponseCreator.createExceptionResponse(e);
@@ -53,7 +56,7 @@ public class Service {
         try {
             DayHistory dayHistoryToAdd = new DayHistory(newDayDate);
             calendarHistory.addDayHistory(dayHistoryToAdd);
-            updateCalendarHistoryInDatabase();
+            server.save(calendarHistory);
             return ResponseCreator.createOkResponse();
         } catch (Exception e) {
             return ResponseCreator.createExceptionResponse(e);
@@ -66,7 +69,7 @@ public class Service {
             SimpleDate date = new SimpleDate(year, month, day);
             DayHistory dayHistory = calendarHistory.getDayHistory(date);
             dayHistory.addEatenFood(foodToAdd);
-            updateCalendarHistoryInDatabase();
+            server.save(calendarHistory);
             return ResponseCreator.createOkResponse();
         } catch (Exception e) {
             return ResponseCreator.createExceptionResponse(e);
@@ -79,7 +82,7 @@ public class Service {
             SimpleDate date = new SimpleDate(year, month, day);
             DayHistory dayHistory = calendarHistory.getDayHistory(date);
             dayHistory.clearAll();
-            updateCalendarHistoryInDatabase();
+            server.save(calendarHistory);
             return ResponseCreator.createOkResponse();
         } catch (Exception e) {
             return ResponseCreator.createExceptionResponse(e);
@@ -90,7 +93,7 @@ public class Service {
     public ResponseEntity<Object> clearAll() {
         try {
             calendarHistory.clearAll();
-            updateCalendarHistoryInDatabase();
+            server.save(calendarHistory);
             return ResponseCreator.createOkResponse();
         } catch (Exception e) {
             return ResponseCreator.createExceptionResponse(e);
@@ -100,25 +103,13 @@ public class Service {
     
     
     private void loadOrCreateCalendarHistory() {
-        List<CalendarHistory> found = 
-                Ebean.find(CalendarHistory.class).findList();
-        if (found.isEmpty()) {
+        if (server.isEmpty()) {
             calendarHistory = new CalendarHistory();
-            saveCalendarHistoryToDatabase();
+            server.save(calendarHistory);
         } else {
-            CalendarHistory lastEntry = found.get(found.size() - 1);
+            CalendarHistory lastEntry = server.getLast();
             calendarHistory = lastEntry;
         }
             
-    }
-    
-    private CalendarHistory saveCalendarHistoryToDatabase() {
-        Ebean.save(calendarHistory);
-        return calendarHistory;
-    }
-
-    private CalendarHistory updateCalendarHistoryInDatabase() {
-        Ebean.update(calendarHistory);
-        return calendarHistory;
     }
 }
